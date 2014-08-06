@@ -1102,7 +1102,7 @@ int connect_to_channel_by_name_2(char *name, char * msg)  /*   %ENTRY%   */
 
      if(!get_broker_Authorization())
        {
-         fprintf(stderr, "Authorizartion token failure \n");
+         fprintf(stderr, "Authorization token failure \n");
          return(-1);
        }
      if(GetHostName(host_name, sizeof host_name))
