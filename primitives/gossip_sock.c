@@ -319,7 +319,7 @@ char *get_broker_Authorization()  /*   %ENTRY%   */
   failed = chmod(buf, 0600);
   if(failed)
     {
-      fprintf(stderr, "Improper permissions for Authorization file\n chmod error: \n", strerror(errno));
+      fprintf(stderr, "Improper permissions for Authorization file: %s\n chmod error: %s \n", buf, strerror(errno));
       return(NULL);
     }
   if((fd = open(buf, O_RDONLY)) == -1) 
