@@ -305,7 +305,8 @@ char *get_broker_Authorization()  /*   %ENTRY%   */
   int fd;
   char buf[1024];
   char *homedir = getenv("HOME");
-  
+  int errcode;
+
   snprintf(buf, 1023, "%s/.gossip", homedir);
   
   if(chmod(buf, 0711))
@@ -315,10 +316,10 @@ char *get_broker_Authorization()  /*   %ENTRY%   */
     }
 
   snprintf(buf, 1023, "%s/.gossip/.Bauth", getenv("HOME"));
-
-  if(chmod(buf, 0600))
+  errcode = chmod(buf, 0600);
+  if(errcode)
     {
-      fprintf(stderr, "Improper permissions for Authorization file\n");
+      fprintf(stderr, "Improper permissions for Authorization file\n chmod error code: %d\n", errcode);
       return(NULL);
     }
   if((fd = open(buf, O_RDONLY)) == -1) 
@@ -1102,7 +1103,7 @@ int connect_to_channel_by_name_2(char *name, char * msg)  /*   %ENTRY%   */
 
      if(!get_broker_Authorization())
        {
-         fprintf(stderr, "Authorizartion token failure \n");
+         fprintf(stderr, "Authorization token failure \n");
          return(-1);
        }
      if(GetHostName(host_name, sizeof host_name))
