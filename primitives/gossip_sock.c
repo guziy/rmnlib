@@ -305,7 +305,7 @@ char *get_broker_Authorization()  /*   %ENTRY%   */
   int fd;
   char buf[1024];
   char *homedir = getenv("HOME");
-  int errcode;
+  int failed;
 
   snprintf(buf, 1023, "%s/.gossip", homedir);
   
@@ -316,10 +316,10 @@ char *get_broker_Authorization()  /*   %ENTRY%   */
     }
 
   snprintf(buf, 1023, "%s/.gossip/.Bauth", getenv("HOME"));
-  errcode = chmod(buf, 0600);
-  if(errcode)
+  failed = chmod(buf, 0600);
+  if(failed)
     {
-      fprintf(stderr, "Improper permissions for Authorization file\n chmod error code: %d\n", errcode);
+      fprintf(stderr, "Improper permissions for Authorization file\n chmod error code: %d\n", errno);
       return(NULL);
     }
   if((fd = open(buf, O_RDONLY)) == -1) 
